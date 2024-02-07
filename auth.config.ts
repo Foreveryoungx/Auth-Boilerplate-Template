@@ -4,9 +4,22 @@ import Credentials from '@auth/core/providers/credentials';
 import { LoginSchema} from '@/schemas';
 import {getUserByEmail} from '@/data/user';
 import bcrypt from 'bcryptjs';
+import GitHub from '@auth/core/providers/github';
+import Google from '@auth/core/providers/google';
+import Apple from '@auth/core/providers/apple';
 
 export default {
     providers: [
+        GitHub({
+            clientId: process.env.GITHUB_CLIENT_ID,
+            clientSecret: process.env.GITHUB_CLIENT_SECRET,
+
+        }),
+        Google({
+            clientId: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        }),
+        Apple,
         Credentials({
             async authorize(credentials) {
                 const validatedFields = LoginSchema.safeParse(credentials);
