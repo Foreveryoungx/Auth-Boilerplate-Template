@@ -28,6 +28,8 @@ export const RegisterForm = () => {
         }
     });
 
+    //TODO: add name to the schema
+
     const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
         setError('');
         setSuccess('');
