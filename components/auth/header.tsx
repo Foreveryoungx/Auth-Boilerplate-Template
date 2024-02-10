@@ -9,7 +9,7 @@ const font = Poppins({
 interface HeaderProps {
     label?: string;
 };
-
+//need to modify to my liking
 export const Header = ({label}: HeaderProps) => {
     return(
         <div className={'w-full flex flex-col gap-y-4 items-center justify-center'}>
