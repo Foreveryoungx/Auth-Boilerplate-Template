@@ -6,7 +6,7 @@ import { getUserById} from '@/data/user';
 import {UserRole} from '@prisma/client';
 
 
-// @ts-ignore
+
 export const {
     handlers :{GET, POST},
     auth,
@@ -22,8 +22,21 @@ export const {
         }
     },
     callbacks: {
+        async signIn({ user, account}) {
+
+            console.log("user", user, account);
+            // Allow OAuth without email verification
+            if(account?.provider !== "credentials") return true;
+
+            const existingUser = await getUserById(user.id);
+
+            // Prevent sign in if email is not verified
+            if(!existingUser?.emailVerified) return false;
+
+            return true;
+        },
         // @ts-ignore
-        async session({session, token}){
+        async session({token, session}){
 
             if(token.sub && session.user){
                 session.user.id = token.sub;
